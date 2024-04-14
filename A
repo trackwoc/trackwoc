@@ -10,7 +10,7 @@ getgenv().Trackwoc = {
         ["ClearRConsole"] = false, --//only krnl function but it clears console when u use print notification
     },
     VisualEffects = {
-        ["ColorCorrection"] = true, --//basicly like shaders
+        ["ColorCorrection"] = false, --//basicly like shaders
         ["ColorCorrectionBrightness"] = 0, --//brightness
         ["ColorCorrectionSaturation"] = 5, --//Saturation
         ["ColorCorrectionContrast"] = 2 --//Contrast
