@@ -1,0 +1,59 @@
+getgenv().keytoclick = "C"
+tool = Instance.new("Tool")
+tool.RequiresHandle = false
+tool.Name = keytoclick
+tool.Activated:connect(function()
+    local vim = game:service("VirtualInputManager")
+vim:SendKeyEvent(true, keytoclick, false, game)
+end)
+tool.Parent = game.Players.LocalPlayer.Backpack
+
+game.StarterGui:SetCore("SendNotification", {
+    Title = "6zpi premium loading";
+    Text = "enjoy 6zpi premium ";
+
+})
+
+local player = game.Players.LocalPlayer
+
+local function connectCharacterAdded()
+    player.CharacterAdded:Connect(onCharacterAdded)
+end
+
+connectCharacterAdded()
+
+player.CharacterRemoving:Connect(function()
+    tool.Parent = game.Players.LocalPlayer.Backpack
+end)
+
+--Made By 6zpi
+
+--6zpi on discord
+
+local Library = loadstring(game:HttpGet("https://pastebin.com/raw/kpLzpNXc"))()
+
+local Window = Library:CreateWindow("6zpi premium☑️", Vector2.new(100, 100), Enum.KeyCode.RightShift)
+local AkaliNotif =
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/Dynissimo/main/Scripts/AkaliNotif.lua"))()
+    
+local Notify = AkaliNotif.Notify
+
+local AimingTab = Window:CreateTab("Main")
+local MiscTab = Window:CreateTab("Misc")
+local TeleportTab = Window:CreateTab("Teleports")
+
+local testSection = MiscTab:CreateSector("Misc", "left")
+
+testSection:AddButton(
+    "RightClick",
+    function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/BalligusapoTT/BalligusapoTT/main/Leftclickballi'))()
+    end
+)
+
+local testSection = TeleportTab:CreateSector("Teleports", "left")
+
+testSection:AddButton("Double Barrel", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1039.59985, 18.8513641, -256.449951, -1, 0, 0, 0, 1, 0, 0, 0, -1)
+end)
+
