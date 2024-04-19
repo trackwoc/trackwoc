@@ -32,7 +32,7 @@ end)
 
 local Library = loadstring(game:HttpGet("https://pastebin.com/raw/kpLzpNXc"))()
 
-local Window = Library:CreateWindow("6zpi premium☑️", Vector2.new(400, 400), Enum.KeyCode.RightShift)
+local Window = Library:CreateWindow("6zpi premium☑️", Vector2.new(350, 350), Enum.KeyCode.RightShift)
 local AkaliNotif =
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/Dynissimo/main/Scripts/AkaliNotif.lua"))()
     
