@@ -374,10 +374,10 @@ local PredictionValue = 0.24
                 if Settings.rewrittenmain.NOTIF == true then
                     Plr = getClosestPlayerToCursor()
                 game.StarterGui:SetCore("SendNotification", {
-						Title = "Lock Notification",
-						Text = "Unlocked",
-						Icon = "",
-						Duration = 1,
+						Title = "6zpi Lock Notification",
+						Text = "6zpi Unlocked",
+						Icon = "17183484218",
+						Duration = 3,
 })
             end
             else
@@ -386,10 +386,10 @@ local PredictionValue = 0.24
                 if Settings.rewrittenmain.NOTIF == true then
  
                     game.StarterGui:SetCore("SendNotification", {
-						Title = "Lock Notification",
-						Text = "Locked On :"..tostring(Plr.Name); 
-						Icon = "",
-						Duration = 1,
+						Title = "6zpi Lock Notification",
+						Text = "6zpi Locked On :"..tostring(Plr.Name); 
+						Icon = "17183484218",
+						Duration = 3,
 })
  
                 end
@@ -623,7 +623,7 @@ local SelectedDisableKey = getgenv().DisableKey
 --// Check if aimlock is loaded	
  
 if getgenv().Loaded == true then	
-    Notify("Aimlock is already loaded!")	
+    Notify("6zpi loaded!")	
     return	
 end	
  
@@ -699,16 +699,16 @@ Mouse.KeyDown:Connect(function(k)
             if Locked then	
                 Victim = getClosest()	
  
-                Notify("Locked onto: "..tostring(Victim.Character.Humanoid.DisplayName))	
+                Notify("6zpi premium locked!: "..tostring(Victim.Character.Humanoid.DisplayName))	
             else	
                 if Victim ~= nil then	
                     Victim = nil	
  
-                    Notify("Unlocked!")	
+                    Notify("6zpi premium Unlocked!")	
                 end	
             end	
         else	
-            Notify("Aimlock is not enabled!")	
+            Notify("6zpi aimlock is not enabled!")	
         end	
     end	
     if k == SelectedDisableKey then	
