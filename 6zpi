@@ -1,4 +1,4 @@
-getgenv().keytoclick = "C"
+getgenv().keytoclick = "6zpi"
 tool = Instance.new("Tool")
 tool.RequiresHandle = false
 tool.Name = keytoclick
@@ -10,7 +10,7 @@ tool.Parent = game.Players.LocalPlayer.Backpack
 
 game.StarterGui:SetCore("SendNotification", {
     Title = "6zpi";
-    Text = "6zpi";
+    Text = "6zpi on discord";
 
 })
 
@@ -26,13 +26,11 @@ player.CharacterRemoving:Connect(function()
     tool.Parent = game.Players.LocalPlayer.Backpack
 end)
 
---Made By Xarcax, reworked by k0nkx/asainyuh, Haafli helped on orbit thx
-
---Heavily pasted btw just like aura x
+--Made By 6zpi
 
 local Library = loadstring(game:HttpGet("https://pastebin.com/raw/kpLzpNXc"))()
 
-local Window = Library:CreateWindow("6zpi", Vector2.new(300, 300), Enum.KeyCode.RightShift)
+local Window = Library:CreateWindow("6zpi premium", Vector2.new(300, 300), Enum.KeyCode.RightShift)
 local AkaliNotif =
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/Dynissimo/main/Scripts/AkaliNotif.lua"))()
     
