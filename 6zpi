@@ -1,4 +1,4 @@
-getgenv().keytoclick = "c
+getgenv().keytoclick = "6zpi premium"
 tool = Instance.new("Tool")
 tool.RequiresHandle = false
 tool.Name = keytoclick
@@ -9,7 +9,7 @@ end)
 tool.Parent = game.Players.LocalPlayer.Backpack
 
 game.StarterGui:SetCore("SendNotification", {
-    Title = "6zpi";
+    Title = "6zpi premiumt";
     Text = "6zpi on discord";
 
 })
@@ -26,11 +26,13 @@ player.CharacterRemoving:Connect(function()
     tool.Parent = game.Players.LocalPlayer.Backpack
 end)
 
---Made By 6zpi
+--Made By Xarcax, reworked by k0nkx/asainyuh, Haafli helped on orbit thx
+
+--Heavily pasted btw just like aura x
 
 local Library = loadstring(game:HttpGet("https://pastebin.com/raw/kpLzpNXc"))()
 
-local Window = Library:CreateWindow("6zpi premium", Vector2.new(300, 300), Enum.KeyCode.RightShift)
+local Window = Library:CreateWindow("6zpi Premium✔️", Vector2.new(300, 300), Enum.KeyCode.RightShift)
 local AkaliNotif =
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/Dynissimo/main/Scripts/AkaliNotif.lua"))()
     
@@ -374,10 +376,10 @@ local PredictionValue = 0.24
                 if Settings.rewrittenmain.NOTIF == true then
                     Plr = getClosestPlayerToCursor()
                 game.StarterGui:SetCore("SendNotification", {
-						Title = "6zpi Lock Notification",
-						Text = "6zpi Unlocked",
-						Icon = "17183484218",
-						Duration = 3,
+						Title = "Lock Notification",
+						Text = "Unlocked",
+						Icon = "",
+						Duration = 1,
 })
             end
             else
@@ -386,10 +388,10 @@ local PredictionValue = 0.24
                 if Settings.rewrittenmain.NOTIF == true then
  
                     game.StarterGui:SetCore("SendNotification", {
-						Title = "6zpi Lock Notification",
-						Text = "6zpi Locked On :"..tostring(Plr.Name); 
-						Icon = "17183484218",
-						Duration = 3,
+						Title = "Lock Notification",
+						Text = "Locked On :"..tostring(Plr.Name); 
+						Icon = "",
+						Duration = 1,
 })
  
                 end
@@ -623,7 +625,7 @@ local SelectedDisableKey = getgenv().DisableKey
 --// Check if aimlock is loaded	
  
 if getgenv().Loaded == true then	
-    Notify("6zpi loaded!")	
+    Notify("Aimlock is already loaded!")	
     return	
 end	
  
@@ -699,16 +701,16 @@ Mouse.KeyDown:Connect(function(k)
             if Locked then	
                 Victim = getClosest()	
  
-                Notify("6zpi premium locked!: "..tostring(Victim.Character.Humanoid.DisplayName))	
+                Notify("Locked onto: "..tostring(Victim.Character.Humanoid.DisplayName))	
             else	
                 if Victim ~= nil then	
                     Victim = nil	
  
-                    Notify("6zpi premium Unlocked!")	
+                    Notify("Unlocked!")	
                 end	
             end	
         else	
-            Notify("6zpi aimlock is not enabled!")	
+            Notify("Aimlock is not enabled!")	
         end	
     end	
     if k == SelectedDisableKey then	
