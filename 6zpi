@@ -1,4 +1,4 @@
-getgenv().keytoclick = "6zpi premium"
+getgenv().keytoclick = "c"
 tool = Instance.new("Tool")
 tool.RequiresHandle = false
 tool.Name = keytoclick
