@@ -1,0 +1,221 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+local Mouse = LocalPlayer:GetMouse()
+local CamlockState = false
+local Prediction = 0.16
+local Locked = true
+local enemy = nil
+local CheckKO = true -- Set to true if you want to check if players are KO'd, false to ignore KO status.
+local WallCheck = true -- Set to true if you want to check if players are behind a wall, false to ignore walls.
+local Notifications = true -- Set to true if you want to enable notifications, false to disable.
+
+-- Notification setup
+local AkaliNotif = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/Dynissimo/main/Scripts/AkaliNotif.lua"))();
+local Notify = AkaliNotif.Notify
+
+local function notify(message)
+    if Notifications then
+        Notify({
+            Description = message;
+            Title = "x649 Lock";
+            Duration = 10;
+        })
+    end
+end
+
+-- Function to perform a wall check using Raycast
+local function IsBehindWall(target)
+    local origin = workspace.CurrentCamera.CFrame.Position
+    local direction = (target.Position - origin).Unit * (target.Position - origin).Magnitude
+    local ray = workspace:Raycast(origin, direction)
+
+    if ray then
+        return ray.Instance and ray.Instance:IsDescendantOf(target.Parent) -- Returns true if target is not behind a wall
+    end
+    return false -- Returns false if target is behind a wall
+end
+
+-- Function to find the nearest enemy
+function FindNearestEnemy()
+    local ClosestDistance, ClosestPlayer = math.huge, nil
+    local CenterPosition = Vector2.new(
+        game:GetService("GuiService"):GetScreenResolution().X / 2,
+        game:GetService("GuiService"):GetScreenResolution().Y / 2
+    )
+    for _, Player in ipairs(Players:GetPlayers()) do
+        if Player ~= LocalPlayer then
+            local Character = Player.Character
+            if Character and Character:FindFirstChild("HumanoidRootPart") and Character:FindFirstChild("Humanoid") then
+                if (not CheckKO or (CheckKO and Character.Humanoid.Health > 0)) and
+                   (not WallCheck or (WallCheck and IsBehindWall(Character.HumanoidRootPart))) then
+                    local Position, IsVisibleOnViewport = workspace.CurrentCamera:WorldToViewportPoint(Character.HumanoidRootPart.Position)
+                    if IsVisibleOnViewport then
+                        local Distance = (CenterPosition - Vector2.new(Position.X, Position.Y)).Magnitude
+                        if Distance < ClosestDistance then
+                            ClosestPlayer = Player
+                            ClosestDistance = Distance
+                        end
+                    end
+                end
+            end
+        end
+    end
+    return ClosestPlayer
+end
+
+-- Function to aim at the target
+RunService.Heartbeat:Connect(function()
+    if CamlockState and enemy and enemy.Character and enemy.Character:FindFirstChild("HumanoidRootPart") then
+        local humanoid = enemy.Character:FindFirstChild("Humanoid")
+        -- Check if the enemy is KO'd or behind a wall based on the settings
+        if humanoid and (not CheckKO or humanoid.Health > 0) and (not WallCheck or IsBehindWall(enemy.Character.HumanoidRootPart)) then
+            local camera = workspace.CurrentCamera
+            camera.CFrame = CFrame.new(camera.CFrame.p, enemy.Character.HumanoidRootPart.Position + enemy.Character.HumanoidRootPart.Velocity * Prediction)
+        else
+            -- Disable camlock if the player is KO'd or behind a wall
+            CamlockState = false
+            enemy = nil
+        end
+    end
+end)
+
+-- Toggle CamLock state with a key press
+Mouse.KeyDown:Connect(function(k)
+    if k == getgenv().Key then
+        Locked = not Locked
+        if Locked then
+            enemy = FindNearestEnemy()
+            if enemy then
+                CamlockState = true
+
+                -- Notify about camlock activation
+                notify("CamLock is now ON.")
+
+                -- Listen for enemy respawn and relock when they respawn
+                enemy.CharacterAdded:Connect(function(character)
+                    CamlockState = false
+                    enemy = enemy
+                    CamlockState = true
+                end)
+            end
+        else
+            if enemy then
+                enemy = nil
+                CamlockState = false
+
+                -- Notify about camlock deactivation
+                notify("CamLock is now OFF.")
+            end
+        end
+    end
+end)
+
+-- Handle local player respawn and relock onto the same enemy
+LocalPlayer.CharacterAdded:Connect(function(character)
+    if enemy and enemy.Character and enemy.Character:FindFirstChild("HumanoidRootPart") then
+        CamlockState = true
+    else
+        CamlockState = false
+        enemy = nil
+    end
+end)
+
+-- Create the custom draggable button
+local function createGui()
+    local player = game.Players.LocalPlayer
+    local playerGui = player:WaitForChild("PlayerGui")
+
+    local screenGui = playerGui:FindFirstChild("CustomScreenGui")
+    if not screenGui then
+        screenGui = Instance.new("ScreenGui")
+        screenGui.Name = "CustomScreenGui"
+        screenGui.Parent = playerGui
+    end
+
+    local button = screenGui:FindFirstChild("TokenButton")
+    if not button then
+        button = Instance.new("TextButton")
+        button.Name = "TokenButton"
+        button.Size = UDim2.new(0, 100, 0, 40)
+        button.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+        button.TextColor3 = Color3.fromRGB(255, 255, 255)
+        button.Text = "Toggle CamLock"
+        button.Font = Enum.Font.SourceSansBold
+        button.TextSize = 20
+        button.BorderSizePixel = 0
+        button.BackgroundTransparency = 0.3
+        button.Parent = screenGui
+
+        local corner = Instance.new("UICorner")
+        corner.CornerRadius = UDim.new(0, 10)
+        corner.Parent = button
+
+        button.Draggable = true
+        button.Selectable = true
+        button.Active = true
+
+        -- Load saved position
+        local savedPosition = player:FindFirstChild("SavedPosition")
+        if savedPosition then
+            button.Position = savedPosition.Value
+        else
+            button.Position = UDim2.new(0.5, -50, 0.5, -20)
+        end
+
+        -- Save button position when released
+        local function savePosition()
+            local savedPos = player:FindFirstChild("SavedPosition")
+            if not savedPos then
+                savedPos = Instance.new("Vector3Value")
+                savedPos.Name = "SavedPosition"
+                savedPos.Parent = player
+            end
+            savedPos.Value = button.Position
+        end
+        button.MouseButton1Up:Connect(savePosition)
+
+        -- Toggle CamLock functionality
+        local state = false
+        button.MouseButton1Click:Connect(function()
+            state = not state
+            if state then
+                button.Text = "CamLock ON"
+                enemy = FindNearestEnemy()
+                if enemy and enemy.Character:FindFirstChild("Humanoid") and 
+                   (not CheckKO or enemy.Character.Humanoid.Health > 0) and 
+                   (not WallCheck or IsBehindWall(enemy.Character.HumanoidRootPart)) then
+                    CamlockState = true
+
+                    -- Notify about camlock activation
+                    notify("CamLock is now ON.")
+                else
+                    CamlockState = false
+                    enemy = nil
+                end
+            else
+                button.Text = "CamLock OFF"
+                enemy = nil
+                CamlockState = false
+
+                -- Notify about camlock deactivation
+                notify("CamLock is now OFF.")
+            end
+        end)
+    end
+end
+
+-- Ensure GUI is created on respawn
+local function setupGuiOnRespawn()
+    createGui()
+
+    game.Players.LocalPlayer.CharacterAdded:Connect(function()
+        createGui()
+    end)
+end
+
+setupGuiOnRespawn()
+
+if game.Players.LocalPlayer then
+    setupGuiOnRespawn()
+end
