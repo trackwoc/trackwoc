@@ -190,7 +190,7 @@ function library.new(library_title, cfg_location)
         BackgroundColor3 = Color3.fromRGB(255, 255, 255),
         BackgroundTransparency = 1,
         Position = UDim2.new(0.5, 0, 0, 0),
-        Size = UDim2.new(1, -22, 0, 30),
+        Size = UDim2.new(1, -10, 0, 25), -- Adjusted text space
         Font = Enum.Font.Ubuntu,
         Text = library_title,
         TextColor3 = Color3.fromRGB(255, 255, 255),
@@ -204,7 +204,7 @@ function library.new(library_title, cfg_location)
         BackgroundColor3 = Color3.fromRGB(255, 255, 255),
         BackgroundTransparency = 1,
         Position = UDim2.new(0, 12, 0, 41),
-        Size = UDim2.new(0, 76, 0, 447),
+        Size = UDim2.new(0, 76, 0, 380), -- Adjusted height for new size
     }, ImageLabel)
     
     local UIListLayout = library:create("UIListLayout", {
@@ -216,7 +216,7 @@ function library.new(library_title, cfg_location)
         BackgroundColor3 = Color3.fromRGB(255, 255, 255),
         BackgroundTransparency = 1,
         Position = UDim2.new(0, 102, 0, 42),
-        Size = UDim2.new(0, 586, 0, 446),
+        Size = UDim2.new(0, 370, 0, 370), -- Adjusted for new UI size
     }, ImageLabel)
 
 	if syn then
@@ -1165,7 +1165,7 @@ end
 
                         local options_num = #data.options
                         if options_num >= 4 then
-                            DropdownScroll.Size = UDim2.new(0, 260, 0, 80)
+        Size = UDim2.new(0, 260, 0, 60), -- Adjusted dropdown height
                             for i = 1, options_num do
                                 DropdownScroll.CanvasSize = DropdownScroll.CanvasSize + UDim2.new(0, 0, 0, 20)
                             end
@@ -1371,7 +1371,7 @@ end
 
                         local options_num = #data.options
                         if options_num >= 4 then
-                            DropdownScroll.Size = UDim2.new(0, 260, 0, 80)
+        Size = UDim2.new(0, 260, 0, 60), -- Adjusted dropdown height
                             for i = 1, options_num do
                                 DropdownScroll.CanvasSize = DropdownScroll.CanvasSize + UDim2.new(0, 0, 0, 20)
                             end
